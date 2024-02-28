@@ -1,0 +1,39 @@
+# cкачиваем 1.25 обязательно 1.25! если версия отличается от к8с более чем на 1 минорную, они не будут работать
+
+curl -LO "https://dl.k8s.io/release/v1.25.0/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin
+
+export KUBECONFIG=/home/amosov_i_a/.kube/kubernetes-cluster-9937_kubeconfig.yaml
+
+
+
+
+
+
+# для установке vk soluthions использовать
+
+
+curl -sSL https://hub.mcs.mail.ru/repository/client-keystone-auth/latest/linux/client-install.sh | bash
+source "/home/amosov_i_a/.bashrc"
+
+
+
+
+# kubedashboard
+
+ curl -LO https://github.com/int128/kauthproxy/releases/download/v1.2.1/kauthproxy_linux_amd64.zip
+
+ unzip kauthproxy_linux_amd64.zip
+ 
+ sudo mv kauthproxy /usr/local/bin/
+
+kauthproxy &
+
+# Отркыть новое окно терминала
+export KUBECONFIG=/home/amosov_i_a/.kube/kubernetes-cluster-9937_kubeconfig.yaml
+kauthproxy -n kubernetes-dashboard https://kubernetes-dashboard.svc
+ 
+# открыть браузер по указанному в ответе на команду адресу  http://localhost:18000/
+ 
+ 

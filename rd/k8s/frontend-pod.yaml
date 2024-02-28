@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend-pod
+spec:
+  imagePullSecrets:  
+  - name: k8s-registry-creds
+  containers:
+  - name: frontend-container
+    image: 79.137.175.239:5000/frontend:latest
+    ports:
+    - containerPort: 80

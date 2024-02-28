@@ -1,0 +1,8 @@
+---
+- hosts: pg
+  remote_user: ansible
+  become_user: ansible
+  become: yes
+
+  roles:
+    - rc_sql

@@ -1,0 +1,7 @@
+---
+- hosts: stage3
+  remote_user: ansible
+  become_user: coster
+  become: yes
+  roles:
+    - stage_domain3

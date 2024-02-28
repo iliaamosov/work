@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: riverdoc-front
+  namespace: riverdoc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: riverdoc-front
+  template:
+    metadata:
+      labels:
+        app: riverdoc-front
+    spec:
+      imagePullSecrets:
+        - name: k8s-docker-registry-creds
+
+      containers:
+      - name: riverdoc-front
+        image: 89.208.199.123:5000/riverdoc_front:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-config-volume
+          mountPath: /etc/nginx/conf.d
+
+      volumes:
+      - name: nginx-config-volume
+        configMap:
+          name: nginx-config

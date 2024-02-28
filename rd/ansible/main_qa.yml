@@ -1,0 +1,9 @@
+---
+- hosts: qa
+  remote_user: user
+  become_user: user
+  become: yes
+
+  roles:
+    - glassfish_qa
+

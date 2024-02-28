@@ -1,0 +1,17 @@
+version: '2.0'
+
+services:
+  frontend:
+    image: frontend-dev
+    container_name: frontend-dev
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: .docker/dev.dockerfile
+    network_mode: host
+    environment:
+      - PORT=8081
+      - API_PROTOCOL=http
+      - API_HOST=localhost
+      - API_PORT=8787
+      - SOCKET_PORT=9092

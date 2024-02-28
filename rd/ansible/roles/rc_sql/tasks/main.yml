@@ -1,0 +1,19 @@
+---
+- name: Create temp dir
+  shell: "mkdir /home/ansible/TMP/"
+  ignore_errors: True
+
+- name: Copy rc.sql
+  copy:
+    src: rc.sql
+    dest: "/home/ansible/TMP/rc.sql"
+    owner: ansible
+
+- name: Execute rc.sql
+  community.postgresql.postgresql_query:
+    login_db: cs
+    login_host: localhost
+    login_user: cs
+    login_password: q3b7v)GS2
+    path_to_script: /home/ansible/TMP/rc.sql
+    as_single_query: yes

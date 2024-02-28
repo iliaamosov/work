@@ -1,0 +1,9 @@
+---
+- hosts: micro4
+  remote_user: coster
+  become_user: coster
+  become: yes
+
+  roles:
+    - glassfish
+

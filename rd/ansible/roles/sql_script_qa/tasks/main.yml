@@ -1,0 +1,8 @@
+---
+- name: "Back up the database"
+  postgresql_db:
+    state: dump
+    name: "cs"
+    login_user: cs
+    login_password: 38csQa*
+    target: "/home/ansible/backups/{{ lookup('pipe', 'date +%Y_%m_%d') }}.dump.gz"

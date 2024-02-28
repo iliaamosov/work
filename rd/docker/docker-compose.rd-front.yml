@@ -1,0 +1,17 @@
+version: '2.0'
+
+services:
+  frontend:
+    image: rd-front
+    container_name: rd-front
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: .docker/rd-front.dockerfile
+    network_mode: host
+    environment:
+      - PORT=8080
+      - API_PROTOCOL=http
+      - API_HOST=localhost
+      - API_PORT=8787
+      - SOCKET_PORT=9092

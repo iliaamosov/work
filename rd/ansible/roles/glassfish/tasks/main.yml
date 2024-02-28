@@ -1,0 +1,102 @@
+---
+- name: Copy pwd
+#  become: yes
+  template:
+    src: pwd.j2
+    dest: "/home/coster/TMP/pwd.txt"
+    owner: coster
+    group: contest
+
+- name: Undeploy CScore
+#  become: yes
+  shell: "/home/coster/glassfish4Ntik/glassfish/bin/asadmin --port 4950 --host localhost --user admin --passwordfile=/home/coster/TMP/pwd.txt undeploy CScore"
+  ignore_errors: True
+
+- name: Stop domain    
+#  become: yes
+  shell: "/home/coster/glassfish4Ntik/glassfish/bin/asadmin --port 4950 --host localhost stop-domain domain1 || true"
+
+- name: Copy lib
+#  become: yes
+  copy:
+    src: lib
+    dest: /home/coster/glassfish4Ntik/glassfish/domains/domain1/
+    owner: coster
+    group: contest
+
+- name: copy cs.prop
+#  become: yes
+  copy:
+    src: cs.properties
+    dest: /home/coster/glassfish4Ntik/glassfish/domains/domain1/config/
+    owner: coster 
+    group: contest
+
+- name: copy realm.properties
+#  become: yes
+  copy:
+    src: realm.properties
+    dest: /home/coster/glassfish4Ntik/glassfish/domains/domain1/config/
+    owner: coster 
+    group: contest
+
+- name: Copy CScore
+#  become: yes
+  copy:
+    src: CScore.ear
+    dest: /home/coster/TMP/CScore.ear
+    owner: coster 
+    group: contest
+
+- name: Clear applications dir
+  shell: "rm -Rf /home/coster/glassfish4Ntik/glassfish/domains/domain1/applications/*"
+  args:
+    warn: no
+
+- name: Clear autodeploy dir
+  shell: "rm -Rf /home/coster/glassfish4Ntik/glassfish/domains/domain1/autodeploy/*"
+  args:
+    warn: no
+
+- name: Clear cache session-store
+  shell: "rm -Rf /home/coster/glassfish4Ntik/glassfish/domains/domain1/session-store/*"
+  args:
+    warn: no
+
+- name: Clear cache osgi-cache
+  shell: "rm -Rf /home/coster/glassfish4Ntik/glassfish/domains/domain1/osgi-cache/*"
+  args:
+    warn: no
+
+- name: Clear cache generated
+  become: yes
+  shell: "rm -Rf /home/coster/glassfish4Ntik/glassfish/domains/domain1/generated/*"
+  args:
+    warn: no
+
+- name: Chown coster
+  become: yes
+  shell: "sudo chown coster:contest -R /home/coster/glassfish4Ntik/glassfish/domains/domain1/"
+  args:
+    warn: no
+
+#- name: Start domain
+#  become: yes
+#  become_user: coster
+#  shell: "/home/coster/glassfish4Ntik/glassfish/bin/asadmin start-domain --debug domain1"
+
+- name: Start GF
+  become: yes
+  shell: "sudo systemctl start gf-coster"
+
+- name: Deploy CScore
+  become: yes
+  become_user: coster
+  shell: "/home/coster/glassfish4Ntik/glassfish/bin/asadmin --port 4950 --user admin --passwordfile=/home/coster/TMP/pwd.txt deploy /home/coster/TMP/CScore.ear"
+
+- name: remove temp files
+#  become: yes
+  shell: "rm -Rf /home/coster/TMP/*"
+  args:
+    warn: no
+

@@ -1,0 +1,17 @@
+version: '2.0'
+
+services:
+  frontend:
+    image: frontend-prod-windows
+    container_name: frontend-prod-windows
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: .docker/prod.windows.dockerfile
+    ports: g
+      - 8081:80
+      - 8787:8787
+    environment:
+      - API_PROTOCOL=http
+    extra_hosts:
+      - api:192.168.10.214

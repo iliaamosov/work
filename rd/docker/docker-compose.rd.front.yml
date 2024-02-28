@@ -1,0 +1,24 @@
+version: '3.3'
+
+services:
+  hello:
+    build:
+      context: .
+      dockerfile: .docker/stage.dockerfile
+    image: ${IMAGE_NAME}:${STAGE_SHA}
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    networks:
+      - traefik
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=80'
+#      - 'traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${STAGE_URL}`)'
+      - 'traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${srv-front-rd-ci01.nauka.local}`)'
+      - 'traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=web'
+
+networks:
+  traefik:
+    external:
+      name: 'web'
+

@@ -1,0 +1,17 @@
+version: '2.0'
+
+services:
+  frontend:
+    image: frontend-cssandboxall
+    container_name: frontend-cssandboxall
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: .docker/qa.dockerfile
+    network_mode: host
+    environment:
+      - PORT=80
+      - API_PROTOCOL=http
+      - API_HOST=localhost
+      - API_PORT=8787
+      - SOCKET_PORT=9092

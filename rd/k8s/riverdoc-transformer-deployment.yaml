@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: riverdoc-transformer-deployment
+  namespace: riverdoc
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: riverdoc-transformer
+  template:
+    metadata:
+      labels:
+        app: riverdoc-transformer
+    spec:
+      imagePullSecrets:
+        - name: k8s-docker-registry-creds
+
+      containers:
+        - name: riverdoc-transformer-container
+          image: 89.208.199.123:5000/riverdoc_transformer:latest
+          ports:
+            - containerPort: 8338

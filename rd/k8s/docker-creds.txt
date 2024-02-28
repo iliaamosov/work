@@ -1,0 +1,2 @@
+username=rd-docker
+password=9tWb2Weoe

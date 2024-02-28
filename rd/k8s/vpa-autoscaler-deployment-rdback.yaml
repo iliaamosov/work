@@ -1,0 +1,21 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: vpa-deployment-back
+  namespace: riverdoc
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: riverdoc-back
+  updatePolicy:
+    updateMode: "Auto"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: "*"
+      cpu:
+        min: 100m
+        max: 1
+      memory:
+        min: 100Mi
+        max: 2Gi

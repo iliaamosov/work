@@ -1,0 +1,8 @@
+---
+- hosts: pg_qa
+  remote_user: ansible
+  become_user: ansible
+  become: yes
+
+  roles:
+    - rc_sql_qa

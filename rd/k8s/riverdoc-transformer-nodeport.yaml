@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: riverdoc-transformer-deployment
+  namespace: riverdoc
+spec:
+  selector:
+    app: riverdoc-transformer
+  ports:
+    - protocol: TCP
+      port: 8338
+      targetPort: 8338
+      nodePort: 32487  # Вы можете задать нужный порт здесь
+  type: NodePort
